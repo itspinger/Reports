@@ -11,6 +11,8 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+
+    implementation(project(":spi"))
 }
 
 tasks.test {
