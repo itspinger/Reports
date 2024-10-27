@@ -1,9 +1,6 @@
 plugins {
-    kotlin("jvm") version "2.0.0"
+    kotlin("jvm")
 }
-
-group = "raf.rs"
-version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -11,13 +8,14 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+
+    implementation(project(":spi"))
+    implementation("com.github.librepdf:openpdf:2.0.3")
 }
 
 tasks.test {
     useJUnitPlatform()
 }
-
-
 kotlin {
     jvmToolchain(21)
 }

@@ -5,6 +5,6 @@ enum class ReportType {
     TXT,
     CSV,
     PDF,
-    EXCEL
+    EXCEL;
 
 }
