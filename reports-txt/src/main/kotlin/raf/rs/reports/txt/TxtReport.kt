@@ -36,6 +36,8 @@ class TxtReport : IReport {
                 writer.print("-".repeat(width + 2))
             }
 
+            writer.println()
+
             for (i in 0 until numRows) {
                 columns.forEachIndexed { index, column ->
                     val value = data[column]?.get(i) ?: ""

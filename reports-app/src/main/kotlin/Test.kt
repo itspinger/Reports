@@ -2,6 +2,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
+import raf.rs.reports.model.ColumnCalculations
 import java.io.InputStreamReader
 import java.util.*
 
@@ -45,10 +46,12 @@ fun main() {
 
     val inputStream = object {}.javaClass.getResourceAsStream("/data.json")
     val reader = InputStreamReader(inputStream)
-    val data = prepareData(reader)
+    val data = prepareData(reader).toMutableMap()
     reader.close()
+
+    val calculation = listOf(ColumnCalculations("years+", listOf("year", "group"), '/'))
 
     println(data)
 
-    exporterServices[ReportType.PDF]?.generateReport(data, destination = "izlaz3.pdf", header = true, title = ".....")
+    exporterServices[ReportType.TXT]?.generateReport(data, destination = "izlaz3.txt", header = true, title = ".....")
 }  
