@@ -8,7 +8,13 @@ class CsvReport : IReport {
 
     override val getReportType: ReportType = ReportType.CSV
 
-    override fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String?, summary: String?) {
+    override fun generateReport(
+        data: Map<String, List<String>>,
+        destination: String,
+        header: Boolean,
+        title: String?,
+        summary: Map<String, String>?
+    ) {
         val columns = data.keys.toList()
         val numRows = data.values.first().size
 

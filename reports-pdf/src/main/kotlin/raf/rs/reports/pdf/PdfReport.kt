@@ -12,7 +12,13 @@ class PdfReport : IReport {
 
     override val getReportType: ReportType = ReportType.PDF
 
-    override fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String?, summary: String?) {
+    override fun generateReport(
+        data: Map<String, List<String>>,
+        destination: String,
+        header: Boolean,
+        title: String?,
+        summary: Map<String, String>?
+    ) {
         // Create an empty document
         val document = Document()
         val columns = data.keys.toList()
@@ -56,7 +62,7 @@ class PdfReport : IReport {
 
             document.add(table)
 
-            summary?.let { it: String ->
+            summary?.let { it: Map<String,String> ->
                 document.add(Chunk.NEWLINE)
                 val summaryParagraph = Paragraph("Summary: $it", FontFactory.getFont(FontFactory.HELVETICA, 12f))
                 document.add(summaryParagraph)

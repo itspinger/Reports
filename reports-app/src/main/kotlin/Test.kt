@@ -3,6 +3,8 @@ import com.google.gson.reflect.TypeToken
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
 import raf.rs.reports.model.ColumnCalculations
+import raf.rs.reports.model.SummaryCalculation
+import raf.rs.reports.model.SummaryCalculationType
 import java.io.InputStreamReader
 import java.util.*
 
@@ -50,8 +52,9 @@ fun main() {
     reader.close()
 
     val calculation = listOf(ColumnCalculations("years+", listOf("year", "group"), '/'))
-
+    val summary= mutableMapOf<String, Any>("LAbela1" to SummaryCalculation("years+",SummaryCalculationType.SUM,">=2019"))
+    exporterServices[ReportType.TXT]?.generateReport(data, destination = "izlaz5.txt", header = true, title = ".....",summary = summary)
     println(data)
 
-    exporterServices[ReportType.TXT]?.generateReport(data, destination = "izlaz3.txt", header = true, title = ".....")
+    exporterServices[ReportType.TXT]?.generateReport(data, destination = "izlaz3.txt", header = true, title = ".....", calculations = calculation)
 }  
