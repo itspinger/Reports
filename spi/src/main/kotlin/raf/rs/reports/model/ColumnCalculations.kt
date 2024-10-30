@@ -2,7 +2,7 @@ package raf.rs.reports.model
 
 data class ColumnCalculations(val columnName: String, val columns: List<String>, val operator: Char) {
 
-    fun calculateValues(data: MutableMap<String, List<String>>): List<String> {
+    fun calculateValues(data: Map<String, List<String>>): List<String> {
         val calculations: MutableList<String> = ArrayList()
         val size = data.values.maxOfOrNull { it.size } ?: 0
         for (i in 0 until size) {
@@ -30,7 +30,7 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
         return calculations
     }
 
-    private fun getValuesFrom(data: MutableMap<String, List<String>>, columns: List<String>, index: Int): List<Int> {
+    private fun getValuesFrom(data: Map<String, List<String>>, columns: List<String>, index: Int): List<Int> {
         val values: MutableList<Int> = ArrayList()
         for (column in columns) {
             val columnValues = data[column]!!
