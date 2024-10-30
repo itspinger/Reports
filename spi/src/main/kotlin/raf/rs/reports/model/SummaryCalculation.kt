@@ -1,6 +1,6 @@
 package raf.rs.reports.model
 
-data class SummaryCalculation(val columnName: String, val type: SummaryCalculationType, val operator: Operator?, val targetValue: Int?) {
+data class SummaryCalculation(val columnName: String, val type: SummaryCalculationType, val operator: Operator? = null, val targetValue: Int? = null) {
 
     constructor(columnName: String, type: SummaryCalculationType, condition: Pair<Operator, Int>?) : this(
         columnName,

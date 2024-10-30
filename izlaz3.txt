@@ -1,9 +1,9 @@
 .....
 
-subject               classroom  year  group  day        time_from  time_to  
------------------------------------------------------------------------------
-Operating Systems     RAF1       1     107    Wednesday  08:00      10:00    
-Software Engineering  RAF5       4     105    Thursday   14:30      16:30    
-Web Programming       RAF7       3     102    Thursday   15:30      16:30    
-Software Engineering  RAF4       1     107    Friday     09:00      11:00    
-Operating Systems     RAF4       3     107    Wednesday  11:00      13:00    
+subject               classroom  year  group  day        time_from  time_to  years+  
+-------------------------------------------------------------------------------------
+Operating Systems     RAF1       1     107    Wednesday  08:00      10:00    0       
+Software Engineering  RAF5       4     105    Thursday   14:30      16:30    0       
+Web Programming       RAF7       3     102    Thursday   15:30      16:30    0       
+Software Engineering  RAF4       1     107    Friday     09:00      11:00    0       
+Operating Systems     RAF4       3     107    Wednesday  11:00      13:00    0       

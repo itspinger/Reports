@@ -51,5 +51,4 @@ interface IReport {
 
         return reportData.toMutableMap()
     }
-
 }

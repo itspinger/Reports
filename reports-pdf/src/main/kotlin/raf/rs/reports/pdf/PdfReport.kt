@@ -64,8 +64,13 @@ class PdfReport : IReport {
 
             summary?.let { it: Map<String,String> ->
                 document.add(Chunk.NEWLINE)
-                val summaryParagraph = Paragraph("Summary: $it", FontFactory.getFont(FontFactory.HELVETICA, 12f))
+
+                val summaryParagraph = Paragraph("Summary:", FontFactory.getFont(FontFactory.HELVETICA, 12f))
                 document.add(summaryParagraph)
+
+                for ((key, value) in it) {
+                    document.add(Paragraph("$key: $value", FontFactory.getFont(FontFactory.HELVETICA, 12f)))
+                }
             }
 
         } catch (e: Exception) {

@@ -63,9 +63,19 @@ class ExcelReport : IReport {
 
         // Add summary if provided
         summary?.let { it:  Map<String, String> ->
-            val summaryRow: Row = sheet.createRow(numRows + 2) // Place summary after data
+            val summaryRow: Row = sheet.createRow(numRows + 3) // Place summary after data
             val summaryCell: Cell = summaryRow.createCell(0)
-            summaryCell.setCellValue("Summary: $it")
+            summaryCell.setCellValue("Summary: ")
+
+            var startIndex = numRows + 4;
+            for ((key, value) in it) {
+                val keyRow: Row = sheet.createRow(startIndex++)
+                val keyCell: Cell = keyRow.createCell(0);
+                val valueCell: Cell = keyRow.createCell(1);
+
+                keyCell.setCellValue(key);
+                valueCell.setCellValue(value);
+            }
         }
 
         // Write to the destination file

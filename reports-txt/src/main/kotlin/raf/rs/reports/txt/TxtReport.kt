@@ -55,7 +55,8 @@ class TxtReport : IReport {
 
             summary?.let {
                 writer.println()
-                writer.println(it)
+                writer.println("Summary:")
+                it.forEach { entry -> writer.println("${entry.key} : ${entry.value}") }
             }
         }
     }
