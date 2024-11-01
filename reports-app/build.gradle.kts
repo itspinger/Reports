@@ -12,11 +12,12 @@ repositories {
 
 dependencies {
     implementation(project(":spi"))
-    runtimeOnly(project(":reports-csv"))
-    runtimeOnly(project(":reports-excel"))
-    runtimeOnly(project(":reports-pdf"))
-    runtimeOnly(project(":reports-txt"))
+    implementation(project(":reports-csv"))
+    implementation(project(":reports-excel"))
+    implementation(project(":reports-pdf"))
+    implementation(project(":reports-txt"))
     implementation("com.google.code.gson:gson:2.11.0")
+    implementation(project(":reports-calculations"))
 }
 
 tasks.test {

@@ -2,10 +2,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
-import raf.rs.reports.model.ColumnCalculations
+import raf.rs.reports.calculations.ColumnCalculations
+import raf.rs.reports.calculations.SummaryCalculation
+import raf.rs.reports.calculations.SummaryCalculationType
 import raf.rs.reports.model.Summary
-import raf.rs.reports.model.SummaryCalculation
-import raf.rs.reports.model.SummaryCalculationType
 import java.io.InputStreamReader
 import java.util.*
 
@@ -54,7 +54,7 @@ fun main() {
 
     val calculation = listOf(ColumnCalculations("years+", listOf("year", "group"), '/'))
 
-    val summaryCalculations = SummaryCalculation("year", SummaryCalculationType.AVG)
+    val summaryCalculations = SummaryCalculation("year", SummaryCalculationType.SUM, SummaryCalculation.Operator.GREATER_EQUAL, 3)
     val summary = Summary(mapOf("Avg Years" to summaryCalculations))
 
     exporterServices[ReportType.PDF]?.generateReport(data, destination = "izlaz5.pdf", header = true, title = ".....", summary = summary)

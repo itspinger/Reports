@@ -1,4 +1,4 @@
-package raf.rs.reports.model
+package raf.rs.reports.calculations
 
 enum class SummaryCalculationType {
    SUM, AVG, COUNT

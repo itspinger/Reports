@@ -1,5 +1,7 @@
 package raf.rs.reports.model
 
+import raf.rs.reports.calculations.SummaryCalculation
+
 class Summary(private val sourceSummaryMap: Map<String, Any>) {
     private val map: MutableMap<String, String> = HashMap()
 

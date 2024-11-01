@@ -11,14 +11,12 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-
-    implementation(project(":spi"))
-    implementation(project(":reports-calculations"))
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(21)
 }

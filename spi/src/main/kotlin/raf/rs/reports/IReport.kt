@@ -1,6 +1,6 @@
 package raf.rs.reports
 
-import raf.rs.reports.model.ColumnCalculations
+import raf.rs.reports.calculations.ColumnCalculations
 import raf.rs.reports.model.Summary
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData

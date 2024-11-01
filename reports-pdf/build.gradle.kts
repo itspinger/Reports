@@ -11,6 +11,7 @@ dependencies {
 
     implementation(project(":spi"))
     implementation("com.github.librepdf:openpdf:2.0.3")
+    implementation(project(":reports-calculations"))
 }
 
 tasks.test {

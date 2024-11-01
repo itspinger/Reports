@@ -1,4 +1,4 @@
-package raf.rs.reports.model
+package raf.rs.reports.calculations
 
 data class SummaryCalculation(val columnName: String, val type: SummaryCalculationType, val operator: Operator? = null, val targetValue: Int? = null) {
 
@@ -63,7 +63,7 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
                 return null
             }
 
-            fun fromCondition(condition: String): Pair<Operator, Int>? {
+            fun fromCondition(condition: String): Pair<Operator, Int> {
                 val trimmed = condition.trim()
                 entries.forEach { operator ->
                     if (trimmed.startsWith(operator.operator)) {
@@ -75,7 +75,7 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
                     }
                 }
 
-                return null
+                throw RuntimeException("Failed to find operator: $condition")
             }
         }
 

@@ -1,4 +1,4 @@
-package raf.rs.reports.model
+package raf.rs.reports.calculations
 
 data class ColumnCalculations(val columnName: String, val columns: List<String>, val operator: Char) {
 

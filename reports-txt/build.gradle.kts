@@ -13,6 +13,7 @@ dependencies {
     testImplementation(kotlin("test"))
 
     implementation(project(":spi"))
+    implementation(project(":reports-calculations"))
 }
 
 tasks.test {

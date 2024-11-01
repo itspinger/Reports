@@ -9,6 +9,7 @@ include(
     "reports-csv",
     "reports-txt",
     "reports-excel",
-    "reports-pdf"
+    "reports-pdf",
+    "reports-app",
+    "reports-calculations"
 )
-include("reports-app")
