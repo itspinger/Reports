@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/reports-app" />
+            <option value="$PROJECT_DIR$/reports-calculations" />
             <option value="$PROJECT_DIR$/reports-csv" />
             <option value="$PROJECT_DIR$/reports-excel" />
             <option value="$PROJECT_DIR$/reports-pdf" />
