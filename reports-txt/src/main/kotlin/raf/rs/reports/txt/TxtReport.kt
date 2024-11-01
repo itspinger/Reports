@@ -31,8 +31,10 @@ class TxtReport : IReport {
             }
 
             // Write the header row
-            columns.forEachIndexed { index, column ->
-                writer.print(column.padEnd(columnWidths[index] + 2))
+            if (header) {
+                columns.forEachIndexed { index, column ->
+                    writer.print(column.padEnd(columnWidths[index] + 2))
+                }
             }
 
             writer.println()

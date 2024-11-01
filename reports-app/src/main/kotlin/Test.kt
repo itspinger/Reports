@@ -60,5 +60,6 @@ fun main() {
     exporterServices[ReportType.PDF]?.generateReport(data, destination = "izlaz5.pdf", header = true, title = ".....", summary = summary)
     println(data)
 
-    exporterServices[ReportType.TXT]?.generateReport(data, destination = "izlaz3.txt", header = true, title = ".....", calculations = calculation)
+    exporterServices[ReportType.EXCEL]?.generateReport(data, destination = "izlaz3.xlsx", header = true, title = ".....", calculations =
+    calculation, printRowNumbers = true)
 }  

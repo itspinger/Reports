@@ -13,7 +13,7 @@ class CsvReport : IReport {
         destination: String,
         header: Boolean,
         title: String?,
-        summary: Map<String, String>?
+        summary: Map<String, String>?,
     ) {
         val columns = data.keys.toList()
         val numRows = data.values.first().size
