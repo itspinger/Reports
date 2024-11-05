@@ -2,6 +2,7 @@ package raf.rs.reports.txt
 
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
+import raf.rs.reports.model.FormattingOptions
 import java.io.File
 
 class TxtReport : IReport {
@@ -13,7 +14,8 @@ class TxtReport : IReport {
         destination: String,
         header: Boolean,
         title: String?,
-        summary: Map<String, String>?
+        summary: Map<String, String>?,
+        format: FormattingOptions
     ) {
         val columns = data.keys.toList()
         val numRows = data.values.first().size

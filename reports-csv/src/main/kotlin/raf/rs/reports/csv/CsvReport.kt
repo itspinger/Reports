@@ -2,7 +2,9 @@ package raf.rs.reports.csv
 
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
+import raf.rs.reports.model.FormattingOptions
 import java.io.File
+import java.text.Format
 
 class CsvReport : IReport {
 
@@ -14,6 +16,7 @@ class CsvReport : IReport {
         header: Boolean,
         title: String?,
         summary: Map<String, String>?,
+        format: FormattingOptions
     ) {
         val columns = data.keys.toList()
         val numRows = data.values.first().size

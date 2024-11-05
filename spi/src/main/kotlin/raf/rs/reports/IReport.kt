@@ -1,6 +1,7 @@
 package raf.rs.reports
 
 import raf.rs.reports.calculations.ColumnCalculations
+import raf.rs.reports.model.FormattingOptions
 import raf.rs.reports.model.Summary
 import java.sql.ResultSet
 import java.sql.ResultSetMetaData
@@ -9,7 +10,7 @@ interface IReport {
 
     val getReportType: ReportType
 
-    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String?, summary: Map<String, String>? = null)
+    fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String?, summary: Map<String, String>? = null, format: FormattingOptions = FormattingOptions())
 
     fun generateReport(
         data: Map<String, List<String>>,
@@ -17,7 +18,8 @@ interface IReport {
         header: Boolean,
         title: String?,
         summary: Map<String, String>? = null,
-        printRowNumbers: Boolean = false) {
+        printRowNumbers: Boolean = false,
+        format: FormattingOptions = FormattingOptions()) {
 
         val newMap: MutableMap<String, List<String>> = LinkedHashMap()
         if (printRowNumbers) {
@@ -25,7 +27,7 @@ interface IReport {
         }
 
         newMap.putAll(data)
-        generateReport(newMap, destination, header, title, summary)
+        generateReport(newMap, destination, header, title, summary, format)
     }
 
     fun generateReport(
@@ -35,9 +37,10 @@ interface IReport {
         title: String?,
         summary: Summary? = null,
         printRowNumbers: Boolean = false,
+        format: FormattingOptions = FormattingOptions()
     ) {
         summary?.processSummary(data)
-        generateReport(data, destination, header, title, summary?.summary, printRowNumbers)
+        generateReport(data, destination, header, title, summary?.summary, printRowNumbers, format)
     }
 
     fun generateReport(
@@ -48,15 +51,17 @@ interface IReport {
         summary: Summary? = null,
         calculations: List<ColumnCalculations>,
         printRowNumbers: Boolean = false,
+        format: FormattingOptions = FormattingOptions()
     ) {
         val toMap = data.toMutableMap()
         prepareData(toMap, calculations)
-        generateReport(toMap, destination, header, title, summary, printRowNumbers)
+        generateReport(toMap, destination, header, title, summary, printRowNumbers, format)
     }
 
-    fun generateReport(resultSet: ResultSet, destination: String, header: Boolean, title: String? = null, summary: Summary? = null, printRowNumbers: Boolean) {
+    fun generateReport(resultSet: ResultSet, destination: String, header: Boolean, title: String? = null, summary: Summary? = null,
+                       printRowNumbers: Boolean, format: FormattingOptions = FormattingOptions()) {
         val data = prepareData(resultSet)
-        generateReport(data, destination, header, title, summary, printRowNumbers)
+        generateReport(data, destination, header, title, summary, printRowNumbers, format)
     }
 
     private fun addRowNumbers(size: Int) : List<String> {

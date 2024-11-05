@@ -6,6 +6,9 @@ import com.lowagie.text.pdf.PdfPTable
 import com.lowagie.text.pdf.PdfWriter
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
+import raf.rs.reports.model.ElementProperties
+import raf.rs.reports.model.FormattingOptions
+import java.awt.Color
 import java.io.FileOutputStream
 
 class PdfReport : IReport {
@@ -17,7 +20,8 @@ class PdfReport : IReport {
         destination: String,
         header: Boolean,
         title: String?,
-        summary: Map<String, String>?
+        summary: Map<String, String>?,
+        format: FormattingOptions
     ) {
         // Create an empty document
         val document = Document()
@@ -31,8 +35,9 @@ class PdfReport : IReport {
             document.open()
 
             // Add title
-            title?.let { it: String ->
+            title?.let {
                 val titleParagraph = Paragraph(it, FontFactory.getFont(FontFactory.TIMES, 18f))
+                applyStyleToFont(format.titleFormat, titleParagraph.font)
                 titleParagraph.alignment = Element.ALIGN_CENTER
                 document.add(titleParagraph)
             }
@@ -42,10 +47,21 @@ class PdfReport : IReport {
             // Create a table
             val table = PdfPTable(numColumns)
 
+            // Set border styles for the table
+            for (i in 0 until numColumns) {
+                val cell = PdfPCell()
+                applyBorderStyle(cell, format)
+                table.addCell(cell)
+            }
+
             // Add header row if necessary
             if (header) {
                 columns.forEach { column ->
-                    val cell = PdfPCell(Paragraph(column, FontFactory.getFont(FontFactory.HELVETICA, 12f)))
+                    val cellParagraph = Paragraph(column, FontFactory.getFont(FontFactory.HELVETICA, 12f))
+                    applyStyleToFont(format.headerFormat, cellParagraph.font)
+
+                    val cell = PdfPCell(cellParagraph)
+                    applyBorderStyle(cell, format)
                     cell.horizontalAlignment = Element.ALIGN_CENTER
                     table.addCell(cell)
                 }
@@ -56,20 +72,29 @@ class PdfReport : IReport {
             for (i in 0 until numRows) {
                 columns.forEach { column ->
                     val cellData = data[column]?.get(i) ?: ""
-                    table.addCell(cellData)
+                    val cellParagraph = Paragraph(cellData, FontFactory.getFont(FontFactory.HELVETICA, 12f))
+                    applyStyleToFont(format.rowFormat[i], cellParagraph.font)
+                    applyStyleToFont(format.columnFormat[column], cellParagraph.font)
+
+                    val cell = PdfPCell(cellParagraph)
+                    applyBorderStyle(cell, format)
+                    table.addCell(cell)
                 }
             }
 
+            // Add the table to the document
             document.add(table)
 
-            summary?.let { it: Map<String,String> ->
+            summary?.let { sum ->
                 document.add(Chunk.NEWLINE)
 
                 val summaryParagraph = Paragraph("Summary:", FontFactory.getFont(FontFactory.HELVETICA, 12f))
                 document.add(summaryParagraph)
 
-                for ((key, value) in it) {
-                    document.add(Paragraph("$key: $value", FontFactory.getFont(FontFactory.HELVETICA, 12f)))
+                for ((key, value) in sum) {
+                    val cellParagraph = Paragraph("$key: $value", FontFactory.getFont(FontFactory.HELVETICA, 12f))
+                    applyStyleToFont(format.summaryFormat[key], cellParagraph.font)
+                    document.add(cellParagraph)
                 }
             }
 
@@ -77,6 +102,36 @@ class PdfReport : IReport {
             e.printStackTrace()
         } finally {
             document.close()
+        }
+    }
+
+    private fun applyBorderStyle(cell: PdfPCell, format: FormattingOptions) {
+        cell.borderWidth = this.fromFormatToBorderStyle(format)
+        cell.border = PdfPCell.TOP or PdfPCell.BOTTOM or PdfPCell.LEFT or PdfPCell.RIGHT
+    }
+
+    private fun fromFormatToBorderStyle(format: FormattingOptions) : Float {
+        return when (format.borderStyle) {
+            FormattingOptions.BorderStyle.THIN -> 0.4F
+            FormattingOptions.BorderStyle.MEDIUM -> 1.3F
+            else -> 1.0F
+        }
+    }
+
+    private fun applyStyleToFont(properties: ElementProperties?, font: Font) {
+        properties?.let { format ->
+            if (format.hasTextStyle(ElementProperties.TextStyle.BOLD))
+                font.style = Font.BOLD
+
+            if (format.hasTextStyle(ElementProperties.TextStyle.ITALIC))
+                font.style = Font.ITALIC
+
+            if (format.hasTextStyle(ElementProperties.TextStyle.UNDERLINE))
+                font.style = Font.UNDERLINE
+
+            format.color?.let {
+                font.color = Color.decode(it)
+            }
         }
     }
 }

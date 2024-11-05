@@ -2,10 +2,6 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
-import raf.rs.reports.calculations.ColumnCalculations
-import raf.rs.reports.calculations.SummaryCalculation
-import raf.rs.reports.calculations.SummaryCalculationType
-import raf.rs.reports.model.Summary
 import java.io.File
 import java.io.FileReader
 import java.io.InputStreamReader
@@ -74,7 +70,20 @@ fun main() {
     exporterServices[ReportType.PDF]?.generateReport(data, destination = "izlaz5.pdf", header = true, title = ".....", summary = summary)
     println(data)
 
+    val formatOptions = FormattingOptions()
+    formatOptions.titleFormat = ElementProperties.of(null, ElementProperties.TextStyle.UNDERLINE, ElementProperties.TextStyle.ITALIC)
+    formatOptions.headerFormat = ElementProperties.of("#f72105", ElementProperties.TextStyle.BOLD)
+    formatOptions.rowFormat[1] = ElementProperties.of("#22d3d6", ElementProperties.TextStyle.ITALIC)
+    formatOptions.columnFormat["day"] = ElementProperties.of(null, ElementProperties.TextStyle.UNDERLINE)
+    formatOptions.setSummaryFormat("Avg Years", ElementProperties.of(null, ElementProperties.TextStyle.BOLD))
+    formatOptions.borderStyle = FormattingOptions.BorderStyle.THIN
+
+    println(formatOptions.rowFormat[1])
+    println(formatOptions.titleFormat)
+    println(formatOptions.headerFormat)
+
     exporterServices[ReportType.EXCEL]?.generateReport(data, destination = "izlaz3.xlsx", header = true, title = ".....", calculations =
+<<<<<<< Updated upstream
     calculation, printRowNumbers = true)
 
     */
