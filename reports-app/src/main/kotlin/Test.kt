@@ -47,6 +47,7 @@ fun prepareJSONDataNew(jsonData: InputStreamReader): Map<String, List<String>> {
             .flatMap { it.entries } // Flatten all entries across all maps
             .groupBy({ it.key }, { it.value }) // Group by key, collecting values into lists
 
+
 }
 
 fun main() {
@@ -102,8 +103,14 @@ fun main() {
             println("Niste uneli validan broj");
         }
     }
-
+    var i=0
     while(true){
+        if(i!=0){
+            println("Da li zelite da dodate jos jedan izvestaj 1. Da 2. Ne")
+            if(readLine()=="2"){
+                break;
+            }
+        }
         var inputType = "";
         println("izaberite nacin za unos podataka : 1. JSON 2. SQL 3. TXT, 4. CSV")
         when(readLine()) {
@@ -173,8 +180,9 @@ fun main() {
            }
 
         }
+        var destinationfile = "";
         println("Napsiste ime fajla u koji zelite da sacuvate izvestaj");
-        var destination = readLine();
+        destinationfile = readLine().toString();
         println("Da li zelite da dodate header? 1. Da 2. Ne")
         var header = false;
         if(readLine()=="1"){
@@ -189,7 +197,7 @@ fun main() {
         var title = "";
         if(isTitle){
             println("unesite naslov");
-            var title = readLine();
+            title = readLine().toString();
         }
         println("Da li zelite da dodate sazetak? 1. Da 2. Ne")
         var summary = false;
@@ -214,7 +222,7 @@ fun main() {
                     println("unesite sazetak");
                     var summaryType = readLine();
                 }
-                exporterServices[implementation!!.getReportType]?.generateReport(
+                exporterServices[implementation!!.getReportType]?.generateReport( //ToDo treba da se doda summary
                     data,
                     destination=path,
                     header = header,
@@ -224,5 +232,19 @@ fun main() {
             }
 
         }
+        else{
+            for((key, value) in data){
+                println(key)
+                println(value)
+            }
+            exporterServices[implementation!!.getReportType]?.generateReport(
+                data,
+                destination=destinationfile,
+                header = header,
+                title = title,
+            )
+
+        }
+        i++
     }
 }  
