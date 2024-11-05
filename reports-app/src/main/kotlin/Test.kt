@@ -2,6 +2,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
+import raf.rs.reports.calculations.SummaryCalculation
+import raf.rs.reports.calculations.SummaryCalculationType
+import raf.rs.reports.model.Summary
 import java.io.File
 import java.io.FileReader
 import java.io.InputStreamReader
@@ -126,15 +129,12 @@ fun main() {
             "1" -> {
                 inputType = "JSON";
             }
-
             "2" -> {
                 inputType = "SQL";
             }
-
             "3" -> {
                 inputType = "TXT";
             }
-
             "4" -> {
                 inputType = "CSV";
             }
@@ -208,49 +208,78 @@ fun main() {
             println("unesite naslov");
             title = readLine().toString();
         }
+        var isPrintRowNumbers = false;
+        println("Da li zelite da dodate brojanje kolona? 1. Da 2. Ne")
+        if(readLine()=="1"){
+            isPrintRowNumbers = true;
+        }
         println("Da li zelite da dodate sazetak? 1. Da 2. Ne")
         var summary = false;
+        var isCalcSummary=false
+        var calcSummary="";
+        var nonCalcSummary = "";
+        var summaryCalculations = SummaryCalculation("year", SummaryCalculationType.SUM, SummaryCalculation.Operator.GREATER_EQUAL, 3)
         if(readLine()=="1"){
             summary = true;
         }
         if(summary){
-            while (true){
+
                 println("unesite naziv labele");
-                var summaryName = readLine();
-                println("unesite ime kolone za koju zelite da izracunate sazetak");
-                var summaryColumnName = readLine();
+                var summaryLabel = readLine();
+
+
                 println("unesite tip sazetka 1. Izracunjiv 2. Slobadan");
                 if(readLine()=="1"){
-                    println("unesite tip izracuna 1. SUM 2. AVG 3. COUNT");
+                    isCalcSummary = true;
+                    println("unesite ime kolone za koju zelite da izracunate sazetak");
+                    var summaryColumnName = readLine();
+                    println("unesite tip izracunavanja 1. SUM 2. AVG 3. COUNT");
                     var summaryType = readLine();
+                    calcSummary= summaryType.toString()+" "+summaryColumnName.toString();
                     println("unesite uslov ako zelite, ako ne zelite unesite enter");
                     var summaryOperator = readLine();
+                    calcSummary+= " "+summaryOperator.toString();
+
 
                 }
                 else{
-                    println("unesite sazetak");
-                    var summaryType = readLine();
+                    println("unesite sazetak")
+                    nonCalcSummary = readLine().toString()
                 }
-                exporterServices[implementation!!.getReportType]?.generateReport( //ToDo treba da se doda summary
+                if(isCalcSummary)
+                    exporterServices[implementation!!.getReportType]?.generateReport( //ToDo treba da se doda summary
                     data,
-                    destination=path,
+                    destination=destinationfile,
                     header = header,
                     title = title,
-                )
+                        //mapOf<String, String>(Pair(summaryLabel.toString(),calcSummary.toString()))
+                        summary=Summary(mapOf("Avg Years" to summaryCalculations))
+                    )
+                else{
+                    exporterServices[implementation!!.getReportType]?.generateReport(
+                        data,
+                        destination=destinationfile,
+                        header = header,
+                        title = title,
+                        mapOf<String, String>(Pair(summaryLabel.toString(),nonCalcSummary.toString())) ,
+                        printRowNumbers = isPrintRowNumbers
 
-            }
+
+                    )
+                }
+
+
 
         }
         else{
-            for((key, value) in data){
-                println(key)
-                println(value)
-            }
+
             exporterServices[implementation!!.getReportType]?.generateReport(
                 data,
                 destination=destinationfile,
                 header = header,
                 title = title,
+                summary = null as Summary?,
+                printRowNumbers = isPrintRowNumbers,
             )
 
         }
