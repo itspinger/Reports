@@ -110,7 +110,7 @@ class ExcelReport : IReport {
         }
 
         // Line style
-        val range = CellRangeAddress(1, numRows + 1, 0, data.keys.size - 1)
+        val range = CellRangeAddress(1, numRows + (if (header) 1 else 0), 0, data.keys.size - 1)
         val borderStyle : BorderStyle = fromFormatToBorderStyle(format)
         RegionUtil.setBorderTop(borderStyle, range, sheet)
         RegionUtil.setBorderLeft(borderStyle, range, sheet)
@@ -118,7 +118,7 @@ class ExcelReport : IReport {
         RegionUtil.setBorderBottom(borderStyle, range, sheet)
 
         // Write to the destination file
-        FileOutputStream(destination).use { outputStream ->
+        FileOutputStream(this.getReportType.applyExtension(destination)).use { outputStream ->
             workbook.write(outputStream)
         }
 

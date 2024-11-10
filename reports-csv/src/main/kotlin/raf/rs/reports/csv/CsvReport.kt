@@ -21,7 +21,7 @@ class CsvReport : IReport {
         val columns = data.keys.toList()
         val numRows = data.values.first().size
 
-        File(destination).printWriter().use { writer ->
+        File(this.getReportType.applyExtension(destination)).printWriter().use { writer ->
             if (header) {
                 writer.println(columns.joinToString(separator = ","))
             }

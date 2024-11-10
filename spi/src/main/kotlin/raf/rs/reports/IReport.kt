@@ -112,17 +112,23 @@ interface IReport {
      * @param format Formatting options for the report.
      */
     fun generateReport(resultSet: ResultSet, destination: String, header: Boolean, title: String? = null, summary: Summary? = null,
+                       calculations: List<ColumnCalculations> = emptyList(),
                        printRowNumbers: Boolean, format: FormattingOptions = FormattingOptions()) {
         val data = prepareData(resultSet)
+        prepareData(data, calculations)
         generateReport(data, destination, header, title, summary, printRowNumbers, format)
     }
 
+    fun generateReport(resultSet: ResultSet, destination: String, header: Boolean, title: String? = null, summary: Summary? = null,
+                       printRowNumbers: Boolean, format: FormattingOptions = FormattingOptions()) {
+        generateReport(resultSet, destination, header, title, summary, emptyList(), printRowNumbers, format)
+    }
+
     private fun addRowNumbers(size: Int) : List<String> {
-        val result = ArrayList<String>()
+        val result = mutableListOf<String>()
         for (i in 1..size) {
             result.add(i.toString())
         }
-        println(result)
         return result
     }
 

@@ -14,22 +14,21 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-
-    implementation(project(":reports-calculations"))
+    api(project(":reports-calculations"))
 }
 
 tasks.test {
     useJUnitPlatform()
 }
+
 tasks.javadoc {
     dependsOn(tasks.dokkaJavadoc)
     doLast {
         println("Javadoc generated at: ${tasks.dokkaJavadoc.get().outputDirectory}")
     }
 }
-tasks.dokkaJavadoc {
 
+tasks.dokkaJavadoc {
     outputDirectory.set(file("build/dokka/javadoc"))
 }
 

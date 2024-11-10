@@ -43,6 +43,11 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
         return mapNotNull { it.toIntOrNull() }
     }
 
+    override fun toString(): String {
+        val condition = (if (this.operator != null) ", Uslov: ${this.operator.operator} ${this.targetValue}" else "")
+        return "Kalkulacija (Kolona ${this.columnName}, Tip ${this.type}" + condition + ")"
+    }
+
     enum class Operator(val operator: String, val predicate: (Int, Int) -> Boolean) {
 
         GREATER(">", { a, b -> a > b }),
