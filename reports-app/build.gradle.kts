@@ -6,38 +6,38 @@ plugins {
 
 group = "raf.rs"
 version = "1.0-SNAPSHOT"
-application {
-
-    mainClass.set("raf.rs.Reports.reports-app.TestKt")
-}
-
 
 repositories {
     mavenCentral()
     mavenLocal()
 }
-tasks.jar {
+
+dependencies {
+    runtimeOnly(project(":reports-csv"))
+    runtimeOnly(project(":reports-excel"))
+    runtimeOnly(project(":reports-pdf"))
+    runtimeOnly(project(":reports-txt"))
+
+    implementation(project(":spi"))
+    implementation("com.google.code.gson:gson:2.11.0")
+    implementation("com.mysql:mysql-connector-j:8.3.0")
+}
+
+
+application {
+    mainClass.set("raf.rs.reports.testapp.TestKt")
+}
+
+tasks.shadowJar {
+    archiveClassifier.set("all")
     manifest {
         attributes["Main-Class"] = application.mainClass.get()
     }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    from(configurations.runtimeClasspath.get().map { it.name.endsWith("jar") }.map { zipTree(it) })
+    mergeServiceFiles()
 }
 
-
-dependencies {
-    implementation(project(":spi"))
-    implementation(project(":reports-csv"))
-    implementation(project(":reports-excel"))
-    implementation(project(":reports-pdf"))
-    implementation(project(":reports-txt"))
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation(project(":reports-calculations"))
-}
-
-
-tasks.test {
-    useJUnitPlatform()
+tasks.build {
+    dependsOn(tasks.shadowJar)
 }
 
 kotlin {

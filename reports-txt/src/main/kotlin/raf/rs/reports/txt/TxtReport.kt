@@ -25,7 +25,7 @@ class TxtReport : IReport {
             maxOf(column.length, maxDataWidth)
         }
 
-        File(destination).printWriter().use { writer ->
+        File(this.getReportType.applyExtension(destination)).printWriter().use { writer ->
             // Write title if provided
             title?.let {
                 writer.println(it)

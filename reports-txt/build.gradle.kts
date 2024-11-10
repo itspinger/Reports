@@ -10,10 +10,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation(kotlin("test"))
-
-    implementation(project(":spi"))
-    implementation(project(":reports-calculations"))
+    compileOnly(project(":spi"))
 }
 
 tasks.test {

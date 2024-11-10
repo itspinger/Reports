@@ -3,6 +3,8 @@ package raf.rs.reports.calculations
 data class ColumnCalculations(val columnName: String, val columns: List<String>, val operator: Char) {
 
     fun calculateValues(data: Map<String, List<String>>): List<String> {
+        this.checkColumnsNum()
+
         val calculations: MutableList<String> = ArrayList()
         val size = data.values.maxOfOrNull { it.size } ?: 0
         for (i in 0 until size) {
@@ -33,7 +35,7 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
     private fun getValuesFrom(data: Map<String, List<String>>, columns: List<String>, index: Int): List<Int> {
         val values: MutableList<Int> = ArrayList()
         for (column in columns) {
-            val columnValues = data[column]!!
+            val columnValues = data[column] ?: continue
             if (index >= columnValues.size) {
                 continue
             }
@@ -47,6 +49,16 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
         }
 
         return values
+    }
+
+    private fun checkColumnsNum() {
+        if (this.operator == '-' || this.operator == '/' && this.columns.size > 2) {
+            throw RuntimeException("Calculation of this type can only be applied to 2 columns")
+        }
+    }
+
+    override fun toString(): String {
+        return "Kalkulacija (Kolona = ${this.columnName}, Kolone = (${this.columns}), Operator = ${this.operator})"
     }
 
 }

@@ -29,7 +29,7 @@ class PdfReport : IReport {
         val numColumns = columns.size
 
         try {
-            PdfWriter.getInstance(document, FileOutputStream(destination))
+            PdfWriter.getInstance(document, FileOutputStream(this.getReportType.applyExtension(destination)))
 
             // Make sure we can write to the document
             document.open()
@@ -46,13 +46,6 @@ class PdfReport : IReport {
 
             // Create a table
             val table = PdfPTable(numColumns)
-
-            // Set border styles for the table
-            for (i in 0 until numColumns) {
-                val cell = PdfPCell()
-                applyBorderStyle(cell, format)
-                table.addCell(cell)
-            }
 
             // Add header row if necessary
             if (header) {
@@ -112,8 +105,8 @@ class PdfReport : IReport {
 
     private fun fromFormatToBorderStyle(format: FormattingOptions) : Float {
         return when (format.borderStyle) {
-            FormattingOptions.BorderStyle.THIN -> 0.4F
-            FormattingOptions.BorderStyle.MEDIUM -> 1.3F
+            FormattingOptions.BorderStyle.THIN -> 0.7F
+            FormattingOptions.BorderStyle.MEDIUM -> 2.0F
             else -> 1.0F
         }
     }
