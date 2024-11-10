@@ -1,20 +1,37 @@
 package raf.rs.reports.calculations
 
 data class SummaryCalculation(val columnName: String, val type: SummaryCalculationType, val operator: Operator? = null, val targetValue: Int? = null) {
-
+    /**
+     * Constructor for the SummaryCalculation class.
+     *
+     * @param columnName Name of the column.
+     * @param type Type of the summary calculation.
+     * @param condition Condition for the summary calculation.
+     */
     constructor(columnName: String, type: SummaryCalculationType, condition: Pair<Operator, Int>?) : this(
         columnName,
         type,
         condition?.first,
         condition?.second
     )
-
+    /**
+     * Constructor for the SummaryCalculation class.
+     *
+     * @param columnName Name of the column.
+     * @param type Type of the summary calculation.
+     * @param condition Condition for the summary calculation.
+     */
     constructor(columnName: String, type: SummaryCalculationType, condition: String) : this(
         columnName,
         type,
         Operator.fromCondition(condition)
     )
-
+    /**
+     * Calculates the values based on the provided data.
+     *
+     * @param data Data to be used for calculating the values.
+     * @return Calculated value.
+     */
     fun calculateValues(data: Map<String, List<String>>) : Number {
         var result = 0;
 
@@ -38,16 +55,26 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
             SummaryCalculationType.COUNT -> filteredCells.count()
         }
     }
-
+    /**
+     * Maps the list of strings to the list of integers.
+     *
+     * @return List of integers.
+     */
     private fun Iterable<String>.mapToInt() : List<Int> {
         return mapNotNull { it.toIntOrNull() }
     }
-
+    /**
+     * Returns the string representation of the SummaryCalculation object.
+     *
+     * @return String representation of the SummaryCalculation object.
+     */
     override fun toString(): String {
         val condition = (if (this.operator != null) ", Uslov: ${this.operator.operator} ${this.targetValue}" else "")
         return "Kalkulacija (Kolona ${this.columnName}, Tip ${this.type}" + condition + ")"
     }
-
+    /**
+     * Enum class representing the type of the summary calculation.
+     */
     enum class Operator(val operator: String, val predicate: (Int, Int) -> Boolean) {
 
         GREATER(">", { a, b -> a > b }),
@@ -56,7 +83,9 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
         LESS_EQUAL("<=", { a, b -> a <= b }),
         EQUAL("==", { a, b -> a == b }),
         NOT_EQUAL("!=", { a, b -> a != b });
-
+        /**
+         * Companion object that handles operators
+         */
         companion object {
             fun fromString(type: String): Operator? {
                 for (operator in entries) {
@@ -67,7 +96,13 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
 
                 return null
             }
-
+            /**
+             * Returns the operator and the value based on the provided condition.
+             *
+             * @param condition Condition to be used for getting the operator and the value.
+             * @return Operator and the value based on the provided condition.
+             * @throws RuntimeException If the operator is not found.
+             */
             fun fromCondition(condition: String): Pair<Operator, Int> {
                 val trimmed = condition.trim()
                 entries.forEach { operator ->
