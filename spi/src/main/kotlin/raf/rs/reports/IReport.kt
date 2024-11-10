@@ -9,8 +9,29 @@ import java.sql.ResultSetMetaData
 interface IReport {
 
     val getReportType: ReportType
-
+    /**
+     * Generates a report based on the provided data and save it on specified path .
+     *
+     * @param data Data to be used for generating the report.
+     * @param destination Destination where the report will be saved.
+     * @param header Flag indicating whether the report should contain a header.
+     * @param title Title of the report.
+     * @param summary Summary of the report.
+     * @param format Formatting options for the report.
+     */
     fun generateReport(data: Map<String, List<String>>, destination: String, header: Boolean, title: String?, summary: Map<String, String>? = null, format: FormattingOptions = FormattingOptions())
+
+    /**
+     * Generates a report based on the provided data, adding rownumber in first column and save it on specified path .
+     *
+     * @param data Data to be used for generating the report.
+     * @param destination Destination where the report will be saved.
+     * @param header Flag indicating whether the report should contain a header.
+     * @param title Title of the report.
+     * @param summary Summary of the report.
+     * @param printRowNumbers Flag indicating whether the report should contain row numbers.
+     * @param format Formatting options for the report.
+     */
 
     fun generateReport(
         data: Map<String, List<String>>,
@@ -29,7 +50,18 @@ interface IReport {
         newMap.putAll(data)
         generateReport(newMap, destination, header, title, summary, format)
     }
-
+    /**
+     * Generates a report based on the provided data, adding rownumber, gets summary as summary object  adding. rownumber in first column and save it on specified path .
+     *
+     * @param data Data to be used for generating the report.
+     * @param destination Destination where the report will be saved.
+     * @param header Flag indicating whether the report should contain a header.
+     * @param title Title of the report.
+     * @param summary Summary of the report.
+     * @param calculations List of calculations to be performed on the data.
+     * @param printRowNumbers Flag indicating whether the report should contain row numbers.
+     * @param format Formatting options for the report.
+     */
     fun generateReport(
         data: Map<String, List<String>>,
         destination: String,
@@ -42,7 +74,18 @@ interface IReport {
         summary?.processSummary(data)
         generateReport(data, destination, header, title, summary?.summary, printRowNumbers, format)
     }
-
+    /**
+     * Generates a report based on the provided data,adding calculations as column, gets summary as summary object, adding rownumber in first column and save it on specified path .
+     *
+     * @param data Data to be used for generating the report.
+     * @param destination Destination where the report will be saved.
+     * @param header Flag indicating whether the report should contain a header.
+     * @param title Title of the report.
+     * @param summary Summary of the report.
+     * @param calculations List of calculations to be performed on the data.
+     * @param printRowNumbers Flag indicating whether the report should contain row numbers.
+     * @param format Formatting options for the report.
+     */
     fun generateReport(
         data: Map<String, List<String>>,
         destination: String,
@@ -57,7 +100,17 @@ interface IReport {
         prepareData(toMap, calculations)
         generateReport(toMap, destination, header, title, summary, printRowNumbers, format)
     }
-
+    /**
+     * Generates a report based on the provided data as result set,adding calculations as column, gets summary as summary object, adding rownumber in first column and save it on specified path .
+     *
+     * @param resultSet Data to be used for generating the report.
+     * @param destination Destination where the report will be saved.
+     * @param header Flag indicating whether the report should contain a header.
+     * @param title Title of the report.
+     * @param summary Summary of the report.
+     * @param printRowNumbers Flag indicating whether the report should contain row numbers.
+     * @param format Formatting options for the report.
+     */
     fun generateReport(resultSet: ResultSet, destination: String, header: Boolean, title: String? = null, summary: Summary? = null,
                        printRowNumbers: Boolean, format: FormattingOptions = FormattingOptions()) {
         val data = prepareData(resultSet)

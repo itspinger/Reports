@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.0"
+
 }
 
 group = "raf.rs"
@@ -16,7 +17,6 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
-
 
 kotlin {
     jvmToolchain(21)
