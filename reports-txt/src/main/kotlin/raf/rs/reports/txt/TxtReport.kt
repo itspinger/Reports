@@ -7,7 +7,7 @@ import java.io.File
 
 class TxtReport : IReport {
 
-    override val getReportType: ReportType = ReportType.TXT
+    override val reportType: ReportType = ReportType.TXT
 
     override fun generateReport(
         data: Map<String, List<String>>,
@@ -25,7 +25,7 @@ class TxtReport : IReport {
             maxOf(column.length, maxDataWidth)
         }
 
-        File(this.getReportType.applyExtension(destination)).printWriter().use { writer ->
+        File(this.reportType.applyExtension(destination)).printWriter().use { writer ->
             // Write title if provided
             title?.let {
                 writer.println(it)

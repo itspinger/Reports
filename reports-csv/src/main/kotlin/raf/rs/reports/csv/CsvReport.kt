@@ -4,11 +4,10 @@ import raf.rs.reports.IReport
 import raf.rs.reports.ReportType
 import raf.rs.reports.model.FormattingOptions
 import java.io.File
-import java.text.Format
 
 class CsvReport : IReport {
 
-    override val getReportType: ReportType = ReportType.CSV
+    override val reportType: ReportType = ReportType.CSV
 
     override fun generateReport(
         data: Map<String, List<String>>,
@@ -21,7 +20,7 @@ class CsvReport : IReport {
         val columns = data.keys.toList()
         val numRows = data.values.first().size
 
-        File(this.getReportType.applyExtension(destination)).printWriter().use { writer ->
+        File(this.reportType.applyExtension(destination)).printWriter().use { writer ->
             if (header) {
                 writer.println(columns.joinToString(separator = ","))
             }

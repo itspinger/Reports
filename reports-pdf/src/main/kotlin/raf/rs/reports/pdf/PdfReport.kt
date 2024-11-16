@@ -13,7 +13,7 @@ import java.io.FileOutputStream
 
 class PdfReport : IReport {
 
-    override val getReportType: ReportType = ReportType.PDF
+    override val reportType: ReportType = ReportType.PDF
 
     override fun generateReport(
         data: Map<String, List<String>>,
@@ -29,7 +29,7 @@ class PdfReport : IReport {
         val numColumns = columns.size
 
         try {
-            PdfWriter.getInstance(document, FileOutputStream(this.getReportType.applyExtension(destination)))
+            PdfWriter.getInstance(document, FileOutputStream(this.reportType.applyExtension(destination)))
 
             // Make sure we can write to the document
             document.open()

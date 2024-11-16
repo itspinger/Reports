@@ -51,7 +51,7 @@ fun main() {
     val exporterServices = mutableMapOf<ReportType, IReport>()
 
     serviceLoader.forEach { service ->
-        exporterServices[service.getReportType] = service
+        exporterServices[service.reportType] = service
     }
 
     val implementation: IReport = chooseImplementation(exporterServices)

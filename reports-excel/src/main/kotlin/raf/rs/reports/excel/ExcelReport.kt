@@ -2,7 +2,6 @@ package raf.rs.reports.excel
 
 import org.apache.poi.ss.usermodel.*
 import org.apache.poi.ss.util.CellRangeAddress
-import org.apache.poi.ss.util.CellRangeUtil
 import org.apache.poi.ss.util.RegionUtil
 import org.apache.poi.xssf.usermodel.XSSFColor
 import org.apache.poi.xssf.usermodel.XSSFFont
@@ -15,7 +14,7 @@ import java.io.FileOutputStream
 
 class ExcelReport : IReport {
 
-    override val getReportType: ReportType = ReportType.EXCEL
+    override val reportType: ReportType = ReportType.EXCEL
 
     override fun generateReport(
         data: Map<String, List<String>>,
@@ -118,7 +117,7 @@ class ExcelReport : IReport {
         RegionUtil.setBorderBottom(borderStyle, range, sheet)
 
         // Write to the destination file
-        FileOutputStream(this.getReportType.applyExtension(destination)).use { outputStream ->
+        FileOutputStream(this.reportType.applyExtension(destination)).use { outputStream ->
             workbook.write(outputStream)
         }
 
