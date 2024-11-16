@@ -1,0 +1,41 @@
+CREATE TABLE Kontakti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ime VARCHAR(50) NOT NULL,
+    prezime VARCHAR(50) NOT NULL,
+    broj VARCHAR(15) NOT NULL,
+    godina INT NOT NULL,
+    omiljeni_broj INT NOT NULL
+);
+
+INSERT INTO Kontakti (ime, prezime, broj, godina, omiljeni_broj)
+VALUES
+('Lana', 'Matic', '0641122334', 25, 7),
+('Stefan', 'Djordjevic', '0655566778', 32, 3),
+('Dunja', 'Markovic', '0663344556', 28, 9),
+('Filip', 'Lukic', '0639988776', 21, 12),
+('Ivana', 'Kostic', '0617766554', 35, 5),
+('Petar', 'Peric', '0626677889', 29, 2),
+('Mina', 'Vukovic', '0644455667', 26, 8),
+('Nikola', 'Djordjic', '0653322114', 31, 4),
+('Sofija', 'Pavlovic', '0668899002', 27, 11),
+('Andrej', 'Stankovic', '0637788991', 24, 6),
+('Maja', 'Obradovic', '0616655443', 30, 1),
+('Luka', 'Ilic', '0629988775', 23, 10),
+('Jovana', 'Milovanovic', '0643344556', 36, 7),
+('Milos', 'Radovic', '0655566777', 29, 3),
+('Tamara', 'Petrovic', '0661122333', 33, 2),
+('Aleksandar', 'Jovanovic', '0634455668', 22, 9),
+('Katarina', 'Savic', '0616677888', 27, 5),
+('Vanja', 'Kovacevic', '0627788999', 28, 6),
+('Nina', 'Maric', '0648899001', 25, 8),
+('Marko', 'Zivanovic', '0659988772', 34, 12),
+('Teodora', 'Vasic', '0666677882', 31, 4),
+('Nemanja', 'Bogdanovic', '0633322110', 26, 10),
+('Andjela', 'Jeptic', '0614455669', 30, 7),
+('Ognjen', 'Ristic', '0625566771', 23, 1),
+('Marija', 'Stevanovic', '0647788992', 32, 11),
+('Mihajlo', 'Damjanovic', '0658899003', 29, 9),
+('Tijana', 'Mitrovic', '0669988774', 24, 5),
+('Vladimir', 'Lazarevic', '0631122335', 33, 6),
+('Ana', 'Milenkovic', '0613344557', 27, 8),
+('Dusan', 'Radosavljevic', '0625566778', 22, 2);
