@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm")
     id("org.jetbrains.dokka") version "1.8.10"
     `java-library`
-
     `maven-publish`
 }
 
@@ -15,10 +14,6 @@ repositories {
 
 dependencies {
     api(project(":reports-calculations"))
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
 
 tasks.javadoc {
