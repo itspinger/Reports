@@ -1,5 +1,7 @@
 package raf.rs.reports.calculations
 
+import kotlin.jvm.Throws
+
 /**
  * Represents a summary calculation for a specific column in a report.
  * This class supports different types of summary calculations such as sum, average, and count,
@@ -129,6 +131,7 @@ data class SummaryCalculation(val columnName: String, val type: SummaryCalculati
              *
              * @throws RuntimeException If the operator is not found or target value is not an int
              */
+            @Throws(RuntimeException::class)
             fun fromCondition(condition: String): Pair<Operator, Int> {
                 val trimmed = condition.trim()
                 entries.forEach { operator ->

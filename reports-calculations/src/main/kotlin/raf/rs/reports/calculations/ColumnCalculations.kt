@@ -1,5 +1,7 @@
 package raf.rs.reports.calculations
 
+import kotlin.jvm.Throws
+
 /**
  * Data class representing calculations performed on columns in the provided dataset and bound
  * to a new column with the specified name.
@@ -23,6 +25,7 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
      *
      * @throws ArithmeticException if the operator is not supported of if the number of columns exceeds the limit for the current operation
      */
+    @Throws(ArithmeticException::class)
     fun calculateValues(data: Map<String, List<String>>): List<String> {
         this.checkColumnsNum()
 
@@ -76,8 +79,9 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
      * Checks the number of columns, ensuring that the calculation is valid for the given operator.
      * Specifically, some calculations can only be applied to exactly two columns.
      *
-     * @throws RuntimeException if the number of columns exceeds the limit for the current operation.
+     * @throws ArithmeticException if the number of columns exceeds the limit for the current operation.
      */
+    @Throws(ArithmeticException::class)
     private fun checkColumnsNum() {
         if (this.operator == '-' || this.operator == '/' && this.columns.size > 2) {
             throw ArithmeticException("Calculation of this type can only be applied to 2 columns")

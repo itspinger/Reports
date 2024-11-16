@@ -139,10 +139,10 @@ interface IReport {
      * @param calculations list of calculations to be performed on the data.
      * @param printRowNumbers flag indicating whether the report should contain row numbers, by default false.
      * @param format formatting options for the report.
-     *
      * @throws ArithmeticException if for any column calculation the operator is unknown or the columns to calculate from
      *                             exceed the maximum value for that operator
      */
+    @Throws(ArithmeticException::class)
     fun generateReport(
         data: Map<String, List<String>>,
         destination: String,
@@ -187,10 +187,10 @@ interface IReport {
      * @param calculations list of calculations to be performed on the data.
      * @param printRowNumbers flag indicating whether the report should contain row numbers, by default false.
      * @param format formatting options for the report.
-     *
      * @throws ArithmeticException if for any column calculation the operator is unknown or the columns to calculate from
      *                             exceed the maximum value for that operator
      */
+    @Throws(ArithmeticException::class)
     fun generateReport(
         resultSet: ResultSet,
         destination: String,
