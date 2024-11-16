@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     compileOnly(project(":spi"))
-    implementation(project(":reports-calculations"))
+
 }
 
 tasks.test {
