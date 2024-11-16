@@ -56,8 +56,8 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
         return calculations
     }
 
-    private fun getValuesFrom(data: Map<String, List<String>>, columns: List<String>, index: Int): List<Int> {
-        val values: MutableList<Int> = ArrayList()
+    private fun getValuesFrom(data: Map<String, List<String>>, columns: List<String>, index: Int): List<Double> {
+        val values: MutableList<Double> = ArrayList()
         for (column in columns) {
             val columnValues = data[column] ?: continue
             if (index >= columnValues.size) {
@@ -65,10 +65,9 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
             }
 
             val value = columnValues[index]
-            try {
-                value.let { values.add(it.toInt()) }
-            } catch (e: NumberFormatException) {
-                continue
+            val number = value.toDoubleOrNull()
+            if (number != null) {
+                values.add(number)
             }
         }
 
@@ -83,7 +82,7 @@ data class ColumnCalculations(val columnName: String, val columns: List<String>,
      */
     @Throws(ArithmeticException::class)
     private fun checkColumnsNum() {
-        if (this.operator == '-' || this.operator == '/' && this.columns.size > 2) {
+        if ((this.operator == '-' || this.operator == '/') && this.columns.size > 2) {
             throw ArithmeticException("Calculation of this type can only be applied to 2 columns")
         }
     }
